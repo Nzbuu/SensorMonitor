@@ -12,7 +12,7 @@ class Monitor(object):
         self.__loggers = []
         self.time_step = 1
         self.num_stop = 5
-        self.__num_meas = 0
+        self.__count_meas = 0
 
     def __del__(self):
         pass
@@ -28,10 +28,10 @@ class Monitor(object):
 
     def run(self):
         print(self.name)
-        while self.__num_meas < self.num_stop:
+        while self.__count_meas < self.num_stop:
             result = self.get_measurements()
             self.store_measurements(result)
-            self.__num_meas += 1
+            self.__count_meas += 1
             time.sleep(self.time_step)
 
     def get_measurements(self):
