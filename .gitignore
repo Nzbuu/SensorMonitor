@@ -1,6 +1,9 @@
 # IDE directories
 .idea
 
+# Virtualenv
+venv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
