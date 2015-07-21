@@ -1,5 +1,5 @@
 import sys
-from SensorMonitor.Monitor import Monitor
+from SensorMonitor.monitor import Monitor
 
 __author__ = 'James Myatt'
 
@@ -11,6 +11,8 @@ def main():
         m.run()
     except KeyboardInterrupt:
         print("Goodbye!")
+    finally:
+        print("Stop!")
 
 
 if __name__ == '__main__':
