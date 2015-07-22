@@ -1,4 +1,5 @@
 import unittest
+from mock import mock_open, patch
 
 from SensorMonitor.sensor import DS18B20
 
@@ -6,11 +7,17 @@ from SensorMonitor.sensor import DS18B20
 class TestDS18B20(unittest.TestCase):
     def test_OK(self):
         obj = DS18B20()
-        self.assertEqual(obj.parse_data('YES\nt=20000\n'), 20)
+        obj.device_file = 'mock'
+        m = mock_open(read_data='YES\nt=20000\n')
+        with patch('__builtin__.open', m):
+            self.assertEqual(obj.read_sensor(), 20)
 
     def test_NOK(self):
         obj = DS18B20()
-        self.assertEqual(obj.parse_data('NO\nt=20000\n'), None)
+        obj.device_file = 'mock'
+        m = mock_open(read_data='NO\nt=20000\n')
+        with patch('__builtin__.open', m):
+            self.assertEqual(obj.read_sensor(), None)
 
     def test_FromFile(self):
         obj = DS18B20()
