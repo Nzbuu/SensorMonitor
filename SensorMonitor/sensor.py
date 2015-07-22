@@ -26,19 +26,16 @@ class DS18B20(Sensor):
     def read_sensor(self):
         self.init_sensor()
 
-        with open(self.device_file, 'r') as f:
-            raw_data = f.read()
+        with open(self.device_file, 'rb') as f:
+            line = f.readline().strip()
+            if not line or not line.endswith('YES'):
+                return None
 
-        raw_data = self.parse_data(raw_data)
-        return raw_data
+            line = f.readline().strip()
+            if not line or 't=' not in line:
+                return None
 
-    def parse_data(self, raw_data):
-        raw_data = raw_data.split('\n')
-        if raw_data[0].endswith('YES') and len(raw_data) >= 2:
-            line_data = raw_data[1].split('=')
-            return float(line_data[1]) * 0.001 if len(line_data) >= 2 else None
-        else:
-            return None
+            return float(line.split('=')[1]) * 0.001
 
     def get_measurement(self):
         data = self.read_sensor()

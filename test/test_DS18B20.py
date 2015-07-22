@@ -51,7 +51,7 @@ class Test_DS18B20(unittest.TestCase):
         self.assertEqual(obj.read_sensor(), None)
 
     @patch('__builtin__.open', mock_open(
-        read_data='ba 01 55 00 7f ff 0c 10 0a : crc=0a YES\n'))
+        read_data='ba 01 55 00 7f ff 0c 10 0a : crc=0a YES\n '))
     def test_truncated_file_is_NOK(self):
         obj = DS18B20()
         obj.device_file = 'DS18B20_TEST'
