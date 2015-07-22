@@ -34,8 +34,9 @@ class DS18B20(Sensor):
 
     def parse_data(self, raw_data):
         raw_data = raw_data.split('\n')
-        if raw_data[0].endswith('YES'):
-            return float(raw_data[1].split('=')[1]) * 0.001
+        if raw_data[0].endswith('YES') and len(raw_data) >= 2:
+            line_data = raw_data[1].split('=')
+            return float(line_data[1]) * 0.001 if len(line_data) >= 2 else None
         else:
             return None
 
