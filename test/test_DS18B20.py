@@ -4,7 +4,7 @@ from mock import mock_open, patch
 from SensorMonitor.sensor import DS18B20
 
 
-class TestDS18B20(unittest.TestCase):
+class Test_DS18B20(unittest.TestCase):
     @patch('__builtin__.open', mock_open(read_data='YES\nt=20000\n'))
     def test_minimal_OK(self):
         obj = DS18B20()
