@@ -5,19 +5,17 @@ from SensorMonitor.sensor import DS18B20
 
 
 class TestDS18B20(unittest.TestCase):
+    @patch('__builtin__.open', mock_open(read_data='YES\nt=20000\n'))
     def test_OK(self):
         obj = DS18B20()
         obj.device_file = 'mock'
-        m = mock_open(read_data='YES\nt=20000\n')
-        with patch('__builtin__.open', m):
-            self.assertEqual(obj.read_sensor(), 20)
+        self.assertEqual(obj.read_sensor(), 20)
 
+    @patch('__builtin__.open', mock_open(read_data='NO\nt=20000\n'))
     def test_NOK(self):
         obj = DS18B20()
         obj.device_file = 'mock'
-        m = mock_open(read_data='NO\nt=20000\n')
-        with patch('__builtin__.open', m):
-            self.assertEqual(obj.read_sensor(), None)
+        self.assertEqual(obj.read_sensor(), None)
 
     def test_FromFile(self):
         obj = DS18B20()
