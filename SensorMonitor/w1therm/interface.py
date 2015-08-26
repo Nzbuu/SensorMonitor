@@ -7,21 +7,33 @@ import os
 
 class Factory:
     def __init__(self):
-        self.base_dir = '/sys/bus/w1/devices'
+        self.__dict = {
+            'file': FileInterface
+            }
+        self.default_if = 'file'
+        self.default_args = {}
 
-    def create(self, sensor_id=None):
-        if not sensor_id:
-            device_folder = [x for x in os.listdir(self.base_dir) if x.startswith('28')]
-            sensor_id = device_folder[0]
-
-        device_file = self.base_dir + '/' + sensor_id + '/w1_slave'
-        return FileInterface(FileAccessWrapper(device_file)), sensor_id
+    def create(self, spec):
+        if spec['interface']:
+            interface_cls = self.__dict[spec['interface']]
+            return interface_cls(**spec['args'])
+        else:
+            interface_cls = self.__dict[self.default_if]
+            return interface_cls(**self.default_args)
 
 
 class FileInterface(SensorInterface):
-    def __init__(self, file_access):
+    def __init__(self, sensor_id=None, file_access=None, **kwargs):
         SensorInterface.__init__(self)
-        self.file_access = file_access
+        if not file_access:
+            if not sensor_id:
+                device_folder = [x for x in os.listdir('/sys/bus/w1/devices/') if x.startswith('28')]
+                sensor_id = device_folder[0]
+
+             device_file = '/sys/bus/w1/devices/' + sensor_id + '/w1_slave'
+             file_access = FileAccessWrapper(device_file)
+             
+         self.file_access = file_access
 
     def read_data(self):
         with self.file_access.open() as f:
