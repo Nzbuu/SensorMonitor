@@ -9,14 +9,14 @@ class Factory:
     def __init__(self):
         self.__dict = {
             'file': FileInterface
-            }
+        }
         self.default_if = 'file'
         self.default_args = {}
 
-    def create(self, spec):
-        if spec['interface']:
-            interface_cls = self.__dict[spec['interface']]
-            return interface_cls(**spec['args'])
+    def create(self, interface=None, **kwargs):
+        if interface:
+            interface_cls = self.__dict[interface]
+            return interface_cls(**kwargs)
         else:
             interface_cls = self.__dict[self.default_if]
             return interface_cls(**self.default_args)
@@ -30,10 +30,10 @@ class FileInterface(SensorInterface):
                 device_folder = [x for x in os.listdir('/sys/bus/w1/devices/') if x.startswith('28')]
                 sensor_id = device_folder[0]
 
-             device_file = '/sys/bus/w1/devices/' + sensor_id + '/w1_slave'
-             file_access = FileAccessWrapper(device_file)
-             
-         self.file_access = file_access
+            device_file = '/sys/bus/w1/devices/' + sensor_id + '/w1_slave'
+            file_access = FileAccessWrapper(device_file)
+
+        self.file_access = file_access
 
     def read_data(self):
         with self.file_access.open() as f:

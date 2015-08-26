@@ -9,7 +9,7 @@ class Factory(SensorFactory):
     def __init__(self, factory=None):
         if not factory:
             factory = interface.Factory()
-        SensorFactory.__init__(W1Therm, factory)
+        SensorFactory.__init__(self, W1Therm, factory)
 
 
 class W1Therm(Sensor):

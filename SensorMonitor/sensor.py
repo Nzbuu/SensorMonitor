@@ -20,7 +20,7 @@ class SensorFactory:
         self.factory_if = factory_if
     
     def create(self, spec=None):
-        sensor_if = self.__factory.create(spec)
+        sensor_if = self.factory_if.create(spec)
         return self.sensor_cls(sensor_if)
 
 
