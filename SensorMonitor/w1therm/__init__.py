@@ -18,4 +18,4 @@ class W1Therm(Sensor):
 
     def get_measurement(self):
         data = self.sensor_if.read_data()
-        return float(data) * 0.001
+        return data * 0.001
