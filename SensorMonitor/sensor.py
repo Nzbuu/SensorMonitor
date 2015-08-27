@@ -32,6 +32,29 @@ class Sensor:
         return self.sensor_if.read_data()
 
 
+class SensorInterfaceFactory:
+    def __init__(self, dict_if, default_if=None, default_args=None):
+        self.__dict = dict_if
+
+        if default_if is None:
+            self.default_if = self.__dict.keys[0]
+        else:
+            self.default_if = default_if
+
+        if default_args is None:
+            self.default_args = {}
+        else:
+            self.default_args = default_args
+
+    def create(self, interface=None, **kwargs):
+        if interface:
+            interface_cls = self.__dict[interface]
+            return interface_cls(**kwargs)
+        else:
+            interface_cls = self.__dict[self.default_if]
+            return interface_cls(**self.default_args)
+
+
 class SensorInterface:
     def __init__(self):
         pass

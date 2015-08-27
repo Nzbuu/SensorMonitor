@@ -1,25 +1,20 @@
 __author__ = 'James Myatt'
 
-from ..sensor import SensorInterface
+from ..sensor import SensorInterface, SensorInterfaceFactory
 from ..utils import FileAccessWrapper
 import os
 
 
-class Factory:
+class Factory(SensorInterfaceFactory):
     def __init__(self):
-        self.__dict = {
+        dict_if = {
             'file': FileInterface
         }
-        self.default_if = 'file'
-        self.default_args = {}
-
-    def create(self, interface=None, **kwargs):
-        if interface:
-            interface_cls = self.__dict[interface]
-            return interface_cls(**kwargs)
-        else:
-            interface_cls = self.__dict[self.default_if]
-            return interface_cls(**self.default_args)
+        SensorInterfaceFactory.__init__(
+            self,
+            dict_if=dict_if,
+            default_if='file',
+            default_args={})
 
 
 class FileInterface(SensorInterface):
