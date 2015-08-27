@@ -9,7 +9,7 @@ class W1ThermFileTests(unittest.TestCase):
         text = u'YES\nt=20000\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), '20000')
+        self.assertEqual(obj.read_data(), 20000)
 
     def test_minimal_NOK(self):
         text = u'NO\nt=20000\n'
@@ -22,7 +22,7 @@ class W1ThermFileTests(unittest.TestCase):
                u'ba 01 55 00 7f ff 0c 10 0a t=27625\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), '27625')
+        self.assertEqual(obj.read_data(), 27625)
 
     def test_NOK_detailed_file(self):
         text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a NO\n' \
@@ -38,7 +38,7 @@ class W1ThermFileTests(unittest.TestCase):
                u'ba 01 55 00 7f ff 0c 10 0a t=32000\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), '27625')
+        self.assertEqual(obj.read_data(), 27625)
 
     def test_truncated_file(self):
         text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a NO\n'
