@@ -3,5 +3,5 @@ __version__ = '0.0.2'
 
 __all__ = [
     'monitor', 'sensor', 'utils',
-    'w1therm'
+    'time', 'w1therm'
     ]
