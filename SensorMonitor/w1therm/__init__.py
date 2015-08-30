@@ -18,4 +18,7 @@ class W1Therm(Sensor):
 
     def get_measurement(self):
         data = self.sensor_if.read_data()
-        return data * 0.001
+        if data:
+            return data * 0.001
+        else:
+            return data

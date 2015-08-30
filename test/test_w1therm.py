@@ -2,6 +2,7 @@ import unittest
 import io
 
 from SensorMonitor.w1therm import *
+from SensorMonitor.w1therm import W1Therm
 
 
 class W1ThermFileTests(unittest.TestCase):
@@ -9,27 +10,31 @@ class W1ThermFileTests(unittest.TestCase):
         text = u'YES\nt=20000\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), 20000)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), 20.000)
 
     def test_minimal_NOK(self):
         text = u'NO\nt=20000\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), None)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), None)
 
     def test_OK_detailed_file(self):
         text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a YES\n' \
                u'ba 01 55 00 7f ff 0c 10 0a t=27625\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), 27625)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), 27.625)
 
     def test_NOK_detailed_file(self):
-        text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a NO\n' \
-               u'ba 01 55 00 7f ff 0c 10 0a t=27625\n'
+        text = u'ba 01 55 00 7f ff 0c 10 aa : crc=0a NO\n' \
+               u'ba 01 55 00 7f ff 0c 10 aa t=27625\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), None)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), None)
 
     def test_extended_file_ignores_extra_lines(self):
         text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a YES\n' \
@@ -38,26 +43,30 @@ class W1ThermFileTests(unittest.TestCase):
                u'ba 01 55 00 7f ff 0c 10 0a t=32000\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), 27625)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), 27.625)
 
     def test_truncated_file(self):
-        text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a NO\n'
+        text = u'ba 01 55 00 7f ff 0c 10 aa : crc=0a NO\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), None)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), None)
 
     def test_truncated_file_is_NOK(self):
         text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a YES\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), None)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), None)
 
     def test_missing_temperature(self):
         text = u'ba 01 55 00 7f ff 0c 10 0a : crc=0a YES\n' \
                u'ba 01 55 00 7f ff 0c 10 0a\n'
         obj = interface.FileInterface(
             file_access=FakeAccessWrapper(text))
-        self.assertEqual(obj.read_data(), None)
+        sens = W1Therm(obj)
+        self.assertEqual(sens.get_measurement(), None)
 
 
 class FakeAccessWrapper:
