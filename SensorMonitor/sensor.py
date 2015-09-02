@@ -1,17 +1,20 @@
-__author__ = 'James Myatt'
-
 import SensorMonitor
+
+__author__ = 'James Myatt'
 
 
 class Factory:
     def __init__(self):
-        self.__dict = {
-            'w1therm': SensorMonitor.w1therm.Factory
-            }
-   
-    def create(self, spec):
-        factory = self.__dict[spec['type']]()
-        return factory.create(spec)
+        self.__dict = {}
+        self.register('time', SensorMonitor.time.Factory)
+        self.register('w1therm', SensorMonitor.w1therm.Factory)
+
+    def register(self, sensor_type, factory_cls):
+        self.__dict[sensor_type] = factory_cls
+
+    def create(self, type, **kwargs):
+        factory = self.__dict[type]()
+        return factory.create(**kwargs)
 
 
 class SensorFactory:
