@@ -1,4 +1,5 @@
 import unittest
+from hamcrest import *
 from mock import Mock
 import io
 
@@ -15,7 +16,7 @@ class W1ThermTests(unittest.TestCase):
         meas = sens.get_measurement()
 
         mock_interface.read_data.assert_called_once_with()
-        self.assertEqual(meas, 20.000)
+        assert_that(meas, is_(equal_to(20.000)))
 
     def test_calls_interface_once_NOK(self):
         mock_interface = Mock(interface.FileInterface)
@@ -25,7 +26,7 @@ class W1ThermTests(unittest.TestCase):
         meas = sens.get_measurement()
 
         mock_interface.read_data.assert_called_once_with()
-        self.assertEqual(meas, None)
+        assert_that(meas, is_(none()))
 
 
 class W1ThermFileTests(unittest.TestCase):
@@ -36,7 +37,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), 20.000)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(equal_to(20.000)))
 
     def test_minimal_NOK(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -45,7 +48,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), None)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(none()))
 
     def test_OK_detailed_file(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -55,7 +60,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), 27.625)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(equal_to(27.625)))
 
     def test_NOK_detailed_file(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -65,7 +72,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), None)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(none()))
 
     def test_extended_file_ignores_extra_lines(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -77,7 +86,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), 27.625)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(equal_to(27.625)))
 
     def test_truncated_file(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -86,7 +97,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), None)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(none()))
 
     def test_truncated_file_is_NOK(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -95,7 +108,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), None)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(none()))
 
     def test_missing_temperature(self):
         mock_file = Mock(interface.FileAccessWrapper)
@@ -105,7 +120,9 @@ class W1ThermFileTests(unittest.TestCase):
 
         obj = interface.FileInterface(file_access=mock_file)
         sens = W1Therm(obj)
-        self.assertEqual(sens.get_measurement(), None)
+        meas = sens.get_measurement()
+
+        assert_that(meas, is_(none()))
 
 
 if __name__ == '__main__':

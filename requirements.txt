@@ -1,1 +1,2 @@
 mock==1.2.0
+PyHamcrest==1.8.5
