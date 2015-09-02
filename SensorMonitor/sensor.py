@@ -36,18 +36,19 @@ class Sensor:
 
 
 class SensorInterfaceFactory:
-    def __init__(self, dict_if, default_if=None, default_args=None):
-        self.__dict = dict_if
-
-        if default_if is None:
-            self.default_if = self.__dict.keys[0]
-        else:
-            self.default_if = default_if
+    def __init__(self, default_if=None, default_args=None):
+        self.__dict = {}
+        self.default_if = default_if
 
         if default_args is None:
             self.default_args = {}
         else:
             self.default_args = default_args
+
+    def register(self, interface_type, interface_cls):
+        self.__dict[interface_type] = interface_cls
+        if not self.default_if:
+            self.default_if = interface_type
 
     def create(self, interface=None, **kwargs):
         if interface:

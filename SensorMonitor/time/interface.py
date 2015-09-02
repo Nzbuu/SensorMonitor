@@ -1,19 +1,16 @@
-__author__ = 'James Myatt'
-
 from ..sensor import SensorInterface, SensorInterfaceFactory
 import time
+
+__author__ = 'James Myatt'
 
 
 class Factory(SensorInterfaceFactory):
     def __init__(self):
-        dict_if = {
-            'system': SystemInterface
-        }
         SensorInterfaceFactory.__init__(
             self,
-            dict_if=dict_if,
             default_if='system',
             default_args={})
+        self.register('system', SystemInterface)
 
 
 class SystemInterface(SensorInterface):
