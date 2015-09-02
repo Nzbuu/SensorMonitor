@@ -1,9 +1,9 @@
+from ..sensor import Sensor, SensorFactory
+import interface
+
 __author__ = 'James Myatt'
 
 __all__ = ['interface']
-
-from ..sensor import Sensor, SensorFactory
-import interface
 
 
 class Factory(SensorFactory):

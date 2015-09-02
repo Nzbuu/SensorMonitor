@@ -9,8 +9,8 @@ class Factory:
         self.register('time', SensorMonitor.time.Factory)
         self.register('w1therm', SensorMonitor.w1therm.Factory)
 
-    def register(self, sensor_type, factory_cls):
-        self.__dict[sensor_type] = factory_cls
+    def register(self, type, factory_cls):
+        self.__dict[type] = factory_cls
 
     def create(self, type, **kwargs):
         factory = self.__dict[type]()
@@ -45,10 +45,10 @@ class SensorInterfaceFactory:
         else:
             self.default_args = default_args
 
-    def register(self, interface_type, interface_cls):
-        self.__dict[interface_type] = interface_cls
+    def register(self, interface, interface_cls):
+        self.__dict[interface] = interface_cls
         if not self.default_if:
-            self.default_if = interface_type
+            self.default_if = interface
 
     def create(self, interface=None, **kwargs):
         if interface:
