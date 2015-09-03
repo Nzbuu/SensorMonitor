@@ -1,11 +1,5 @@
-import unittest
-from SensorMonitor import *
+from SensorMonitor.monitor import Monitor
 
 
-class TestMonitor(unittest.TestCase):
-    def test_nothing(self):
-        pass
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_can_create_monitor():
+    monitor = Monitor()
