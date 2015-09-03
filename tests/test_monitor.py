@@ -1,4 +1,4 @@
-from SensorMonitor.monitor import Monitor
+from SensorMonitor.monitor import *
 
 
 def test_can_create_monitor():

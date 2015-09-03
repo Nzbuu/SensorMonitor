@@ -2,7 +2,7 @@ from ..sensor import Sensor, SensorFactory
 from . import interface
 
 __author__ = 'James Myatt'
-__all__ = ['interface']
+__all__ = ['interface', 'Factory', 'W1Therm']
 
 
 class Factory(SensorFactory):

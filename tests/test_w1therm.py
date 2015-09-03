@@ -4,7 +4,6 @@ from mock import Mock
 import io
 
 from SensorMonitor.w1therm import *
-from SensorMonitor.w1therm import W1Therm, Factory
 
 
 class TestW1Therm(unittest.TestCase):

@@ -4,7 +4,6 @@ from mock import Mock
 from datetime import datetime
 
 from SensorMonitor.time import *
-from SensorMonitor.time import Time, Factory
 
 
 class TestTime(unittest.TestCase):
