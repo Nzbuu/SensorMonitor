@@ -1,7 +1,5 @@
 import SensorMonitor
 
-__author__ = 'James Myatt'
-
 
 class SensorFactory:
     def __init__(self, sensor_cls, factory_if):

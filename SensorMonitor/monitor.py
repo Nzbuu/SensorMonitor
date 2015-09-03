@@ -1,8 +1,6 @@
 from datetime import datetime
 import time
 
-__author__ = 'James Myatt'
-
 
 class Monitor(object):
     def __init__(self):

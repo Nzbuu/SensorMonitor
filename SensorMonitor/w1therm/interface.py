@@ -2,8 +2,6 @@ from ..sensor import SensorInterface, SensorInterfaceFactory
 from ..utils import FileAccessWrapper
 import os
 
-__author__ = 'James Myatt'
-
 
 class Factory(SensorInterfaceFactory):
     def __init__(self):

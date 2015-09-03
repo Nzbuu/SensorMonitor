@@ -1,8 +1,6 @@
 from ..sensor import SensorInterface, SensorInterfaceFactory
 from datetime import datetime
 
-__author__ = 'James Myatt'
-
 
 class Factory(SensorInterfaceFactory):
     def __init__(self):
