@@ -17,7 +17,7 @@ class W1Therm(Sensor):
         Sensor.__init__(self, sensor_if)
 
     def get_measurement(self):
-        data = self.sensor_if.read_data()
+        data = Sensor.get_measurement(self)
         if data:
             return data * 0.001
         else:

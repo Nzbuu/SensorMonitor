@@ -7,9 +7,9 @@ class SensorFactory:
     def __init__(self, sensor_cls, factory_if):
         self.sensor_cls = sensor_cls
         self.factory_if = factory_if
-    
-    def create(self, interface=None, **kwargs):
-        sensor_if = self.factory_if.create(interface=interface, **kwargs)
+
+    def create(self, **kwargs):
+        sensor_if = self.factory_if.create(**kwargs)
         return self.sensor_cls(sensor_if)
 
 

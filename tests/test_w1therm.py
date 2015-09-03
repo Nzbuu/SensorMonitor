@@ -134,7 +134,3 @@ class TestW1ThermFile(unittest.TestCase):
         meas = sens.get_measurement()
 
         assert_that(meas, is_(none()))
-
-
-if __name__ == '__main__':
-    unittest.main()
