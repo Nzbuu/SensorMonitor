@@ -12,6 +12,7 @@ class Factory(SensorInterfaceFactory):
             default_if='file',
             default_args={})
         self.register('file', FileInterface)
+        self.register('fake', FakeInterface)
 
 
 class FileInterface(SensorInterface):
@@ -44,3 +45,12 @@ class FileInterface(SensorInterface):
     def detect_file(cls, base_dir='/sys/bus/w1/devices', sensor_type=None):
         device_folder = [x for x in os.listdir(base_dir) if x.startswith('28')]
         return device_folder[0]
+
+
+class FakeInterface(SensorInterface):
+    def __init__(self, output=0, **kwargs):
+        SensorInterface.__init__(self)
+        self.__output = output
+
+    def read_data(self):
+        return self.__output

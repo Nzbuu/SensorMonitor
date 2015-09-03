@@ -11,6 +11,7 @@ class Factory(SensorInterfaceFactory):
             default_if='system',
             default_args={})
         self.register('system', SystemInterface)
+        self.register('fake', FakeInterface)
 
 
 class SystemInterface(SensorInterface):
@@ -19,3 +20,12 @@ class SystemInterface(SensorInterface):
 
     def read_data(self):
         return time.time()
+
+
+class FakeInterface(SensorInterface):
+    def __init__(self, output=0, **kwargs):
+        SensorInterface.__init__(self)
+        self.__output = output
+
+    def read_data(self):
+        return self.__output
