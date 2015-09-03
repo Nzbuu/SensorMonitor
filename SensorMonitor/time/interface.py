@@ -1,5 +1,5 @@
 from ..sensor import SensorInterface, SensorInterfaceFactory
-import time
+from datetime import datetime
 
 __author__ = 'James Myatt'
 
@@ -19,13 +19,16 @@ class SystemInterface(SensorInterface):
         SensorInterface.__init__(self)
 
     def read_data(self):
-        return time.time()
+        return datetime.utcnow()
 
 
 class FakeInterface(SensorInterface):
-    def __init__(self, output=0, **kwargs):
+    def __init__(self, output=None, **kwargs):
         SensorInterface.__init__(self)
-        self.__output = output
+        if output:
+            self.__output = output
+        else:
+            self.__output = datetime.utcfromtimestamp(0)
 
     def read_data(self):
         return self.__output
