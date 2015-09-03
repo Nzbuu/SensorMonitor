@@ -2,7 +2,7 @@ import unittest
 from SensorMonitor import *
 
 
-class MonitorTests(unittest.TestCase):
+class TestMonitor(unittest.TestCase):
     def test_nothing(self):
         pass
 

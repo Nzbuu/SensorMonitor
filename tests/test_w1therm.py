@@ -7,7 +7,7 @@ from SensorMonitor.w1therm import *
 from SensorMonitor.w1therm import W1Therm
 
 
-class W1ThermTests(unittest.TestCase):
+class TestW1Therm(unittest.TestCase):
     def test_calls_interface_once_OK(self):
         mock_interface = Mock(interface.FileInterface)
         mock_interface.read_data.return_value = 20000
@@ -29,7 +29,7 @@ class W1ThermTests(unittest.TestCase):
         assert_that(meas, is_(none()))
 
 
-class W1ThermFileTests(unittest.TestCase):
+class TestW1ThermFile(unittest.TestCase):
     def test_minimal_OK(self):
         mock_file = Mock(interface.FileAccessWrapper)
         mock_file.open.return_value = io.StringIO(
