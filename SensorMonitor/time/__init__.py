@@ -1,5 +1,5 @@
 from ..sensor import Sensor, SensorFactory
-import interface
+from . import interface
 
 __author__ = 'James Myatt'
 
