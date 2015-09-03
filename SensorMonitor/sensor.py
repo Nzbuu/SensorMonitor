@@ -22,8 +22,8 @@ class SensorFactory:
         self.sensor_cls = sensor_cls
         self.factory_if = factory_if
     
-    def create(self, spec=None):
-        sensor_if = self.factory_if.create(spec)
+    def create(self, interface=None, **kwargs):
+        sensor_if = self.factory_if.create(interface=interface, **kwargs)
         return self.sensor_cls(sensor_if)
 
 

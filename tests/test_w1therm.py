@@ -4,7 +4,7 @@ from mock import Mock
 import io
 
 from SensorMonitor.w1therm import *
-from SensorMonitor.w1therm import W1Therm
+from SensorMonitor.w1therm import W1Therm, Factory
 
 
 class TestW1Therm(unittest.TestCase):
@@ -27,6 +27,18 @@ class TestW1Therm(unittest.TestCase):
 
         mock_interface.read_data.assert_called_once_with()
         assert_that(meas, is_(none()))
+
+
+class TestW1ThermFactory(unittest.TestCase):
+    def test_can_create_with_factory(self):
+        factory = Factory()
+        obj = factory.create(interface='fake')
+        assert_that(obj, is_(instance_of(W1Therm)))
+
+    def test_can_set_properties_with_factory(self):
+        factory = Factory()
+        obj = factory.create(interface='fake', output=30000)
+        assert_that(obj.get_measurement(), is_(equal_to(30.0)))
 
 
 class TestW1ThermFile(unittest.TestCase):
